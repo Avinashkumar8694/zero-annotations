@@ -1,0 +1,29 @@
+{
+  "name": "zero-annotation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist",
+    "install:local": "npm i",
+    "build:lib": "npm run clean && tsc && cp package.json dist/package.json",
+    "build:start": "npm run build && npm run start",
+    "link:local": "npm i && npm run build:lib && npm link"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "lit": "^3.1.4",
+    "reflect-metadata": "^0.2.2",
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  }
+}

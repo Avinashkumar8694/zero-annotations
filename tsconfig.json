@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+      "module": "ES2022",
+        "target": "ES2022",
+        "declaration": true,
+        "outDir": "./dist",
+        "types": ["reflect-metadata"],
+        "moduleResolution": "node"
+    },
+    "include": ["src/**/*", "index.ts"],
+    "exclude": ["node_modules", "dist"]
+  }
+  
