@@ -15,14 +15,14 @@ function applyRendererAttribute(options: RendererAttributeConfiguration): Proper
     return function (target: Object, propertyKey: string | symbol): void {
         if (!validateRendererAttributeConfiguration(options)) return;
 
-        const existingAttributes = Reflect.getMetadata('RendererAttribute', target) || [];
+        const existingAttributes = Reflect.getMetadata('ZeroAttribute', target) || [];
 
         if (typeof propertyKey === 'string' && typeof (target as any)[propertyKey] !== 'function') {
             options.fieldMappings = options.fieldMappings ?? propertyKey;
         }
 
         existingAttributes.push(options);
-        Reflect.defineMetadata('RendererAttribute', existingAttributes, target);
+        Reflect.defineMetadata('ZeroAttribute', existingAttributes, target);
     };
 }
 

@@ -1,4 +1,4 @@
-export const enum UserInterfaceType {
+export enum UserInterfaceType {
     TEXT_INPUT = 'input',
     TOGGLE_SWITCH = 'toggle',
     DROP_DOWN_MENU = 'drop-down',
@@ -12,7 +12,7 @@ export const enum UserInterfaceType {
     DATA_MAPPER = 'data_mapping',
 }
 
-export const enum AttributeType {
+export enum AttributeType {
     PROPERTY = 'property',
     EVENT = 'event',
     VALIDATION_RULE = 'validation',
