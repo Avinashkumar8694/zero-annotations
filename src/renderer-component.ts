@@ -45,6 +45,13 @@ function RendererComponentDecorator(config: ZeroComponentConfig): ClassDecorator
           'The customElements API is not supported in this environment. Custom element registration skipped.'
         );
       }
+      window.dispatchEvent(
+        new CustomEvent('zero-element:component-load', {
+          detail: {
+            element: this,
+          },
+        })
+      );
     } else {
       throw new Error('Invalid configuration provided to RendererComponent decorator');
     }

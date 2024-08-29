@@ -13,16 +13,17 @@ export function validateRendererAttributeConfiguration(options: RendererAttribut
 
 function applyRendererAttribute(options: RendererAttributeConfiguration): PropertyDecorator {
     return function (target: Object, propertyKey: string | symbol): void {
-        if (!validateRendererAttributeConfiguration(options)) return;
-
-        const existingAttributes = Reflect.getMetadata('ZeroAttribute', target) || [];
-
-        if (typeof propertyKey === 'string' && typeof (target as any)[propertyKey] !== 'function') {
-            options.fieldMappings = options.fieldMappings ?? propertyKey;
+        try {
+            if (!validateRendererAttributeConfiguration(options)) return;
+            const existingAttributes = Reflect.getMetadata('ZeroAttribute', target) || [];
+            if (typeof propertyKey === 'string' && typeof (target as any)[propertyKey] !== 'function') {
+                options.fieldMappings = options.fieldMappings ?? propertyKey;
+            }
+            existingAttributes.push(options);
+            Reflect.defineMetadata('ZeroAttribute', existingAttributes, target);
+        } catch (e) {
+            console.log(e)
         }
-
-        existingAttributes.push(options);
-        Reflect.defineMetadata('ZeroAttribute', existingAttributes, target);
     };
 }
 
