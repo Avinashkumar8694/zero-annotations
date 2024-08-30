@@ -3,20 +3,19 @@
  * 
  * @enum {string}
  */
-export enum UserInterfaceType {
-    TEXT_INPUT = 'text-input',
-    PASSWORD_INPUT = 'password-input',
-    DROPDOWN = 'dropdown',
-    CHECKBOX = 'checkbox',
-    RADIO_BUTTON = 'radio-button',
-    RANGE_SLIDER = 'range-slider',
-    FILE_INPUT = 'file-input',
-    DATE_PICKER = 'date-picker',
-    COLOR_PICKER = 'color-picker',
-    NUMBER_INPUT = 'number-input',
-    TEXTAREA = 'textarea',
-    SWITCH = 'switch',
-    HIDDEN_INPUT = 'hidden-input'
+export declare enum UserInterfaceType {
+    TEXT_INPUT = "text-input",
+    PASSWORD_INPUT = "password-input",
+    DROPDOWN = "dropdown",
+    CHECKBOX = "checkbox",
+    RADIO_BUTTON = "radio-button",
+    RANGE_SLIDER = "range-slider",
+    FILE_INPUT = "file-input",
+    DATE_PICKER = "date-picker",
+    COLOR_PICKER = "color-picker",
+    NUMBER_INPUT = "number-input",
+    TEXTAREA = "textarea",
+    MULTI_SELECT = "multi-select"
 }
 
 /**
@@ -122,19 +121,6 @@ export interface TextAreaConfig {
     placeholderText?: string;
 }
 
-/**
- * Represents a configuration for a switch input field.
- */
-export interface SwitchConfig {
-    // Add additional configurations if needed
-}
-
-/**
- * Represents a configuration for a hidden input field.
- */
-export interface HiddenInputConfig {
-    // Add additional configurations if needed
-}
 
 /**
  * Represents a configuration for a dropdown option item.
@@ -187,7 +173,7 @@ export interface RendererAttributeConfiguration {
     categoryLabel?: string;
     placeholderText?: string;
     initialValue?: boolean | string | number | any[] | object;
-    optionItems?: DropdownOptionItem[] | TypedInputOptionItem[] | RangeSettings | MaxLengthRule | InputFieldType | TextInputConfig | DropdownInputConfig | CheckableInputConfig | RangeSliderConfig | FileInputConfig | DatePickerConfig | ColorPickerConfig | NumberInputConfig | TextAreaConfig | SwitchConfig | HiddenInputConfig;
+    optionItems?: DropdownOptionItem[] | TypedInputOptionItem[] | RangeSettings | MaxLengthRule | InputFieldType | TextInputConfig | DropdownInputConfig | CheckableInputConfig | RangeSliderConfig | FileInputConfig | DatePickerConfig | ColorPickerConfig | NumberInputConfig | TextAreaConfig;
     fieldMappings?: string | TypedInputMapping | DataSourceMapping | Record<string, string>;
     validationRules?: Record<string, any>;
 }

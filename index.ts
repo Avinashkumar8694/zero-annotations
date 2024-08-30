@@ -5,4 +5,4 @@ export { LoadJS } from './src/load-js';
 export { RendererComponent } from './src/renderer-component';
 export {applyGlobalStyles} from './src/rendered-style';
 export {RendererAttribute} from './src/renderer-attributes';
-export {UserInterfaceType, AttributeType, DropdownOptionItem, CheckableOption, TextInputConfig, DropdownInputConfig, CheckableInputConfig, RangeSliderConfig, FileInputConfig, DatePickerConfig, ColorPickerConfig, NumberInputConfig, TextAreaConfig, SwitchConfig, HiddenInputConfig, RendererAttributeConfiguration, DataSourceMapping, TypedInputMapping} from './src/renderer-interface'
+export {UserInterfaceType, AttributeType, DropdownOptionItem, CheckableOption, TextInputConfig, DropdownInputConfig, CheckableInputConfig, RangeSliderConfig, FileInputConfig, DatePickerConfig, ColorPickerConfig, NumberInputConfig, TextAreaConfig,  RendererAttributeConfiguration, DataSourceMapping, TypedInputMapping, RangeSettings} from './src/renderer-interface'
