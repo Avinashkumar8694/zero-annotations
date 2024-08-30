@@ -3,18 +3,18 @@
  * 
  * @enum {string}
  */
-export declare enum UserInterfaceType {
-    TEXT_INPUT = "text-input",
-    PASSWORD_INPUT = "password-input",
-    DROPDOWN = "dropdown",
-    CHECKBOX = "checkbox",
-    RADIO_BUTTON = "radio-button",
-    RANGE_SLIDER = "range-slider",
-    FILE_INPUT = "file-input",
-    DATE_PICKER = "date-picker",
-    COLOR_PICKER = "color-picker",
-    NUMBER_INPUT = "number-input",
-    TEXTAREA = "textarea",
+export enum UserInterfaceType {
+    TEXT_INPUT = 'text-input',
+    PASSWORD_INPUT = 'password-input',
+    DROPDOWN = 'dropdown',
+    CHECKBOX = 'checkbox',
+    RADIO_BUTTON = 'radio-button',
+    RANGE_SLIDER = 'range-slider',
+    FILE_INPUT = 'file-input',
+    DATE_PICKER = 'date-picker',
+    COLOR_PICKER = 'color-picker',
+    NUMBER_INPUT = 'number-input',
+    TEXTAREA = 'textarea',
     MULTI_SELECT = "multi-select"
 }
 
@@ -120,7 +120,6 @@ export interface TextAreaConfig {
     cols?: number;
     placeholderText?: string;
 }
-
 
 /**
  * Represents a configuration for a dropdown option item.
