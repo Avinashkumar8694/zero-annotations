@@ -20,7 +20,7 @@ export function applyGlobalStyles(options?: object): Function {
                 );
             }
 
-            override update(properties: PropertyValueMap<any> | Map<PropertyKey, unknown>) {
+            override update(properties: PropertyValueMap<any> | Map<PropertyKey, unknown>): void {
                 if (!this._stylesApplied) {
                     this._injectGlobalStyles();
                     this._stylesApplied = true;
@@ -29,22 +29,32 @@ export function applyGlobalStyles(options?: object): Function {
             }
 
             private _injectGlobalStyles(): void {
-                const styleSheet = new CSSStyleSheet();
-                const styleElement = document.querySelector('style[alphaGlobalStyle]') as HTMLStyleElement;
-                const cssLinks = document.querySelectorAll('link[rel="stylesheet"][alphaGlobalStyle]');
+                const styleElement = document.querySelector('style.global-style[type="text/css"]') as HTMLStyleElement;
+                const cssLinks = document.querySelectorAll('link[rel="stylesheet"].global-style[type="text/css"]');
+                
+                // Check for support of adoptedStyleSheets
+                const supportsAdoptedStyleSheets = 'adoptedStyleSheets' in Document.prototype;
 
-                const rules = styleElement?.sheet?.cssRules;
-                if (rules && rules.length) {
-                    Array.from(rules).forEach(rule => {
-                        styleSheet.insertRule((rule as CSSRule).cssText);
-                    });
+                if (styleElement && supportsAdoptedStyleSheets) {
+                    // Use adoptedStyleSheets if supported
+                    const styleSheet = new CSSStyleSheet();
+                    const rules = styleElement.sheet?.cssRules;
+
+                    if (rules) {
+                        Array.from(rules).forEach(rule => styleSheet.insertRule((rule as CSSRule).cssText));
+                        this.shadowRoot?.adoptedStyleSheets.push(styleSheet);
+                    }
+                } else if (styleElement) {
+                    // Fallback for browsers without adoptedStyleSheets support
+                    const clone = styleElement.cloneNode(true) as HTMLStyleElement;
+                    this.shadowRoot?.appendChild(clone);
                 }
 
+                // Inject linked stylesheets
                 cssLinks.forEach(link => {
-                    this.shadowRoot?.appendChild(link.cloneNode(true));
+                    const clonedLink = link.cloneNode(true) as HTMLLinkElement;
+                    this.shadowRoot?.appendChild(clonedLink);
                 });
-
-                this.shadowRoot?.adoptedStyleSheets.push(styleSheet);
             }
         }
 

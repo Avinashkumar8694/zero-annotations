@@ -1,54 +1,63 @@
 // src/renderer-component.ts
 import 'reflect-metadata';
 
-interface ZeroComponentOptions {
-  componentName: string;
-  componentVersion: string;
-  label: string;
-  selector: string;
-  category: string;
-  icon: string;
+interface ZeroComponentConfig {
+  name: string;
+  version: string;
+  title: string;
+  elementSelector: string;
+  group: string;
+  iconName: string;
 }
 
-function isValidZeroComponentOptions(options: ZeroComponentOptions): boolean {
+function isValidComponentConfig(config: ZeroComponentConfig): boolean {
   return (
-    typeof options.componentName === 'string' &&
-    typeof options.componentVersion === 'string' &&
-    typeof options.label === 'string' &&
-    typeof options.selector === 'string' &&
-    typeof options.category === 'string' &&
-    typeof options.icon === 'string'
+    typeof config.name === 'string' &&
+    typeof config.version === 'string' &&
+    typeof config.title === 'string' &&
+    typeof config.elementSelector === 'string' &&
+    typeof config.group === 'string' &&
+    typeof config.iconName === 'string'
   );
 }
 
-function RendererComponentDecorator(options: ZeroComponentOptions): ClassDecorator {
-  return function (target: any) {
-    if (isValidZeroComponentOptions(options)) {
-      Reflect.defineMetadata(
-        'ZeroComponent',
-        {
-          componentVersion: options.componentVersion,
-          componentName: options.componentName,
-          label: options.label,
-          selector: options.selector,
-          category: options.category,
-          icon: options.icon,
-        },
-        target.prototype
-      );
-      if (globalThis?.customElements) {
-        customElements.define(`${options.selector}-${options.componentVersion}`, target);
+function RendererComponentDecorator(config: ZeroComponentConfig): ClassDecorator {
+  return function (constructor: any) {
+    if (isValidComponentConfig(config)) {
+      const metadata = {
+        version: config.version,
+        name: config.name,
+        title: config.title,
+        selector: config.elementSelector,
+        category: config.group,
+        icon: config.iconName,
+      };
+
+      Reflect.defineMetadata('ZeroComponent', metadata, constructor.prototype);
+
+      if (globalThis.customElements) {
+        customElements.define(
+          `${config.elementSelector}-${config.version}`,
+          constructor
+        );
       } else {
         console.warn(
-          'customElements API does not exist in this environment. Skipping custom element registration.'
+          'The customElements API is not supported in this environment. Custom element registration skipped.'
         );
       }
+      window.dispatchEvent(
+        new CustomEvent('zero-element:component-load', {
+          detail: {
+            element: this,
+          },
+        })
+      );
     } else {
-      throw new Error('Invalid ZeroComponentOptions for RendererComponent decorator');
+      throw new Error('Invalid configuration provided to RendererComponent decorator');
     }
   };
 }
 
-export function RendererComponent(options: ZeroComponentOptions): ClassDecorator {
+export function RendererComponent(options: ZeroComponentConfig): ClassDecorator {
   return RendererComponentDecorator(options);
 }
