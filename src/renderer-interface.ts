@@ -15,7 +15,8 @@ export enum UserInterfaceType {
     COLOR_PICKER = 'color-picker',
     NUMBER_INPUT = 'number-input',
     TEXTAREA = 'textarea',
-    MULTI_SELECT = "multi-select"
+    MULTI_SELECT = "multi-select",
+    POPUP_DROPDOWN = "popup-dropdown"
 }
 
 /**
