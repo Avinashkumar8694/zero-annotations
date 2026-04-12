@@ -31,3 +31,4 @@ export {
     RendererAttributeConfiguration, 
     TypedInputMapping 
 } from './src/renderer-interface';
+export { ZeroAction, ActionContext, ActionResult } from './src/action-decorators';

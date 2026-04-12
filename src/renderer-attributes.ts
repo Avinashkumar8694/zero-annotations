@@ -16,8 +16,17 @@ function applyRendererAttribute(options: RendererAttributeConfiguration): Proper
         try {
             if (!validateRendererAttributeConfiguration(options)) return;
             const existingAttributes = Reflect.getMetadata('ZeroAttribute', target) || [];
-            if (typeof propertyKey === 'string' && typeof (target as any)[propertyKey] !== 'function') {
-                options.fieldMappings = options.fieldMappings ?? propertyKey;
+            let isNotFunction = true;
+            if (typeof propertyKey === 'string') {
+                try {
+                    isNotFunction = typeof (target as any)[propertyKey] !== 'function';
+                } catch (e) {
+                    // Ignore DOM native getters throwing Illegal Invocation
+                    isNotFunction = true; 
+                }
+                if (isNotFunction) {
+                    options.fieldMappings = options.fieldMappings ?? propertyKey;
+                }
             }
             existingAttributes.push(options);
             Reflect.defineMetadata('ZeroAttribute', existingAttributes, target);

@@ -48,7 +48,7 @@ function RendererComponentDecorator(config: ZeroComponentConfig): ClassDecorator
       window.dispatchEvent(
         new CustomEvent('zero-element:component-load', {
           detail: {
-            element: this,
+            element: metadata,
           },
         })
       );
