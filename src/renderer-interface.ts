@@ -19,7 +19,8 @@ export enum UserInterfaceType {
     POPUP_DROPDOWN = "popup-dropdown",
     LAYOUT_PICKER = "layout-picker",
     RESPONSIVE_OVERRIDE = "responsive-override",
-    IMAGE_PICKER = "image-picker"
+    IMAGE_PICKER = "image-picker",
+    CHIPS = "chips"
 }
 
 /**

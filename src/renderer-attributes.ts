@@ -15,7 +15,7 @@ function applyRendererAttribute(options: RendererAttributeConfiguration): Proper
     return function (target: Object, propertyKey: string | symbol): void {
         try {
             if (!validateRendererAttributeConfiguration(options)) return;
-            const existingAttributes = Reflect.getMetadata('ZeroAttribute', target) || [];
+            const existingAttributes = [...(Reflect.getMetadata('ZeroAttribute', target) || [])];
             let isNotFunction = true;
             if (typeof propertyKey === 'string') {
                 try {
