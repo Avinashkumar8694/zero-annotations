@@ -42,7 +42,8 @@ export function applyGlobalStyles(options?: object): Function {
         // Check for support of adoptedStyleSheets
         const supportsAdoptedStyleSheets = 'adoptedStyleSheets' in Document.prototype;
 
-        if (!this.shadowRoot) {
+        const shadow = this.shadowRoot;
+        if (!shadow) {
           console.error('ShadowRoot is not available.');
           return;
         }
@@ -54,18 +55,18 @@ export function applyGlobalStyles(options?: object): Function {
 
           if (rules) {
             Array.from(rules).forEach(rule => styleSheet.insertRule((rule as CSSRule).cssText));
-            this.shadowRoot.adoptedStyleSheets = [...this.shadowRoot.adoptedStyleSheets, styleSheet];
+            shadow.adoptedStyleSheets = [...shadow.adoptedStyleSheets, styleSheet];
           }
         } else if (styleElement) {
           // Fallback for browsers without adoptedStyleSheets support
           const clone = styleElement.cloneNode(true) as HTMLStyleElement;
-          this.shadowRoot.appendChild(clone);
+          shadow.appendChild(clone);
         }
 
         // Inject linked stylesheets
         cssLinks.forEach(link => {
           const clonedLink = link.cloneNode(true) as HTMLLinkElement;
-          this.shadowRoot.appendChild(clonedLink);
+          shadow.appendChild(clonedLink);
         });
       }
     }

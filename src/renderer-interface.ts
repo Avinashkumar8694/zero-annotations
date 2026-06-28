@@ -16,7 +16,10 @@ export enum UserInterfaceType {
     NUMBER_INPUT = 'number-input',
     TEXTAREA = 'textarea',
     MULTI_SELECT = "multi-select",
-    POPUP_DROPDOWN = "popup-dropdown"
+    POPUP_DROPDOWN = "popup-dropdown",
+    LAYOUT_PICKER = "layout-picker",
+    RESPONSIVE_OVERRIDE = "responsive-override",
+    IMAGE_PICKER = "image-picker"
 }
 
 /**
@@ -128,6 +131,129 @@ export interface TextAreaConfig {
 export interface DropdownOptionItem {
     value: string;
     label: string;
+}
+
+export interface ZeroStudioTemplateMetric {
+    label: string;
+    value: string;
+}
+
+export interface ZeroStudioSlotDefinition {
+    id: string;
+    /**
+     * Placement anchor inside the studio template.
+     * If omitted, studio falls back to the slot id.
+     * Supported template forms include:
+     * - <slot name="slot-id"></slot>
+     * - {{slot:slot-id}}
+     */
+    anchor?: string;
+    label?: string;
+    dropzone?: boolean;
+    /**
+     * Accepted component name patterns, for example:
+     * - ["zero-section"]
+     * - ["zero-text", "zero-button"]
+     * Empty means any component is allowed.
+     */
+    accepts?: string[];
+}
+
+export interface ZeroStudioGeneratedSlotDefinition {
+    /**
+     * Generated slot id pattern, e.g. "col-{index}".
+     */
+    pattern: string;
+    /**
+     * Placement anchor inside the studio template.
+     * Supported template forms include:
+     * - <zero-studio-slot-group name="columns"></zero-studio-slot-group>
+     * - {{slot-group:columns}}
+     */
+    anchor?: string;
+    /**
+     * Prop name from the component config used to generate slot count.
+     */
+    countProp: string;
+    labelPrefix?: string;
+    min?: number;
+    accepts?: string[];
+    dropzone?: boolean;
+    direction?: 'row' | 'column';
+}
+
+export interface ZeroStudioTemplateContext {
+    nodeId?: string;
+    componentName: string;
+    version?: string;
+    props: Record<string, any>;
+    bindings: Record<string, string>;
+    styles?: Record<string, string>;
+    responsiveProps?: {
+        mobile?: Record<string, unknown>;
+        tablet?: Record<string, unknown>;
+        desktop?: Record<string, unknown>;
+    };
+    responsiveStyles?: {
+        mobile?: Record<string, string>;
+        tablet?: Record<string, string>;
+        desktop?: Record<string, string>;
+    };
+    studio: {
+        mode: Record<string, 'static' | 'variable' | 'expression'>;
+        value: Record<string, string>;
+        display: Record<string, string>;
+        binding: Record<string, string>;
+        prop: Record<string, string>;
+        props?: Record<string, any>;
+    };
+}
+
+export interface ZeroStudioTemplate {
+    kind: 'panel' | 'section' | 'column' | 'text' | 'button' | 'card' | 'table' | 'generic';
+    /**
+     * Studio-only visual template.
+     * This is free-form HTML-like markup used only by the studio.
+     *
+     * Supported bindings/tokens:
+     * - {{display:label}} (binding-aware static/variable/expression display)
+     * - {{mode:label}} (static | variable | expression)
+     * - {{value:label}} (raw value preferring binding)
+     * - {{prop:label}} (raw prop value only)
+     * - {{binding:label}} (raw binding expression only)
+     * - {{children}} (inserts nested canvas children/drop-zones)
+     * - {{slot:main}} (inject a named slot dropzone)
+     * - {{slot-group:columns}} (inject a generated slot group)
+     *
+     * Supported structural placeholders:
+     * - <slot name="main"></slot>
+     * - <slot></slot> for the default slot
+     * - <zero-studio-slot-group name="columns"></zero-studio-slot-group>
+     */
+    templateHtml?: string;
+    /**
+     * Explicit named slots for a container component.
+     * When omitted, studio may infer slots from <slot> tags in templateHtml.
+     */
+    slots?: ZeroStudioSlotDefinition[];
+    /**
+     * Generated slot groups for repeated dropzones, such as columns/tabs/cards.
+     * Studio uses this when slot count comes from component config.
+     */
+    generatedSlots?: ZeroStudioGeneratedSlotDefinition[];
+    labelProp?: string;
+    titleProp?: string;
+    subtitleProp?: string;
+    textProp?: string;
+    columnsProp?: string;
+    dataProp?: string;
+    emptyText?: string;
+    dynamicHints?: string[];
+    badges?: string[];
+    metrics?: ZeroStudioTemplateMetric[];
+    sampleHeaders?: string[];
+    sampleRows?: string[][];
+    placeholderLines?: string[];
 }
 
 /**

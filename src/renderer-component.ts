@@ -1,13 +1,21 @@
 // src/renderer-component.ts
 import 'reflect-metadata';
+import type { ZeroStudioTemplate, ZeroStudioTemplateContext } from './renderer-interface';
 
-interface ZeroComponentConfig {
+export interface ZeroComponentConfig {
   name: string;
   version: string;
   title: string;
   elementSelector: string;
   group: string;
   iconName: string;
+}
+
+export type ZeroStudioTemplateFactory = (config?: ZeroStudioTemplateContext) => ZeroStudioTemplate;
+
+export interface ZeroStudioTemplateProvider {
+  getStudioTemplate?: ZeroStudioTemplateFactory;
+  studioTemplate?: ZeroStudioTemplate;
 }
 
 function isValidComponentConfig(config: ZeroComponentConfig): boolean {
@@ -36,10 +44,20 @@ function RendererComponentDecorator(config: ZeroComponentConfig): ClassDecorator
       Reflect.defineMetadata('ZeroComponent', metadata, constructor.prototype);
 
       if (globalThis.customElements) {
-        customElements.define(
-          `${config.elementSelector}-${config.version}`,
-          constructor
-        );
+        const tag = `${config.elementSelector}-${config.version}`;
+        if (!customElements.get(tag)) {
+          try {
+            customElements.define(tag, constructor);
+          } catch (e) {
+            // If constructor is already registered under another tag (e.g. the base selector),
+            // subclass it dynamically to define it under the versioned tag.
+            try {
+              customElements.define(tag, class extends constructor {});
+            } catch (err) {
+              console.error(`[ZeroAnnotations] Failed to define custom element ${tag}:`, err);
+            }
+          }
+        }
       } else {
         console.warn(
           'The customElements API is not supported in this environment. Custom element registration skipped.'

@@ -3,13 +3,15 @@ import 'reflect-metadata';
 export { LoadCSS } from './src/load-css';
 export { LoadJS } from './src/load-js';
 export { RendererComponent } from './src/renderer-component';
+export type { ZeroComponentConfig, ZeroStudioTemplateFactory, ZeroStudioTemplateProvider } from './src/renderer-component';
 export { applyGlobalStyles } from './src/rendered-style';
 export { RendererAttribute } from './src/renderer-attributes';
+import type { ZeroModuleInit } from './src/module-decorators';
 export { 
     ZeroModule, 
-    ZeroModuleInit, 
     ZeroRegistryReady 
 } from './src/module-decorators';
+export type { ZeroModuleInit };
 export { 
     UserInterfaceType, 
     AttributeType, 
@@ -24,6 +26,11 @@ export {
     NumberInputConfig, 
     TextAreaConfig, 
     DropdownOptionItem, 
+    ZeroStudioTemplate,
+    ZeroStudioTemplateContext,
+    ZeroStudioTemplateMetric,
+    ZeroStudioSlotDefinition,
+    ZeroStudioGeneratedSlotDefinition,
     TypedInputOptionItem, 
     RangeSettings, 
     MaxLengthRule, 

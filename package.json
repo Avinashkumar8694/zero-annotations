@@ -1,15 +1,15 @@
 {
   "name": "zero-annotation",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "dist/index.d.ts",
-      "import": "dist/index.js",
-      "default": "dist/index.js"
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
   },
   "files": [

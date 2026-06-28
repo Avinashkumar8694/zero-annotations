@@ -16,7 +16,7 @@ async function buildModule() {
       format: 'esm',
       target: 'es2022',
       minify: false, // Keep it readable for now
-      external: ['lit', 'reflect-metadata'], // We bundle reflect-metadata but keep lit external
+      external: ['lit'], // We bundle reflect-metadata but keep lit external
     });
     console.log('✅ Shared module built successfully at dist/zero-annotation.js');
   } catch (err) {
